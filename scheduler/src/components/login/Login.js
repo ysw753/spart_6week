@@ -1,19 +1,38 @@
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-
+import axios from "axios";
 const Login = () => {
+  const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
-
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
   const goSignup = () => {
     navigate("/join");
   };
-  const goSubmit = (e) => {
+  /*const goSubmit = (e) => {
     e.preventDefault();
-    const id = e.currentTarget[0].value;
-    const password = e.currentTarget[1].value;
+    const enteredEmail = emailInputRef.current.value;
+    const enteredPassword = passwordInputRef.current.value;
+
+    if (isLogin) {
+    } else {
+
+      //{username ,nickname, password}
+      //요청보내기
+      axios
+        .post(url, JSON.stringify({ nickname, password }), {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    }
     alert("로그인완료");
     navigate("/:id/main");
-  };
+  };*/
 
   return (
     <>
@@ -21,9 +40,14 @@ const Login = () => {
 
       <FormBox>
         <h3>로그인</h3>
-        <form onSubmit={goSubmit}>
-          <input placeholder="id" />
-          <input type="password" placeholder="password" minLength={8} />
+        <form>
+          <input ref={emailInputRef} placeholder="id" />
+          <input
+            ref={passwordInputRef}
+            type="password"
+            placeholder="password"
+            minLength={8}
+          />
           <div>
             <button type="button" onClick={goSignup}>
               회원가입

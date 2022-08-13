@@ -1,10 +1,12 @@
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import Header from "../Header/Header";
 
 const Main = () => {
   const navigate = useNavigate();
-
+  const user = useSelector((state) => state.userData.user);
+  console.log(user);
   const goDay = () => {
     navigate("/detail");
   };

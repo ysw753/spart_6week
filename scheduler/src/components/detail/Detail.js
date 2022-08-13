@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Header from "../Header/Header";
 
@@ -70,15 +71,17 @@ const DUMMY = [
 ];
 
 const Detail = () => {
+  const dayDataArr = useSelector((state) => state.dayData.value);
+  console.log(dayDataArr);
   return (
     <>
       <Header />
       <MainBox>
         <DaySection>
-          {DUMMY.map((dayitem) => (
+          {dayDataArr?.map((dayData) => (
             <Card>
-              <p>{dayitem.user.day.title}</p>
-              <p>{dayitem.user.day.text}</p>
+              <p>{dayData.title}</p>
+              <p>{dayData.text}</p>
             </Card>
           ))}
         </DaySection>
