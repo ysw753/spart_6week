@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Header from "../Header/Header";
 import Modal from "./Modal";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const DUMMY = [
   {
