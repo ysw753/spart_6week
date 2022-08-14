@@ -1,9 +1,13 @@
 import styled from "styled-components";
 import Header from "../Header/Header";
 import Modal from "./Modal";
-import { useState,useRef } from "react";
+import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {createSchedule,deleteSchedule,updateSchedule} from "../../redux/dayDataSlice";
+import {
+  createSchedule,
+  deleteSchedule,
+  updateSchedule,
+} from "../../redux/dayDataSlice";
 
 // const DUMMY = [
 //   {
@@ -37,18 +41,22 @@ import {createSchedule,deleteSchedule,updateSchedule} from "../../redux/dayDataS
 const Detail = () => {
   // 일정등록 모달
   const [uploadSchedule, setUploadSchedule] = useState(false);
-  const closeScheduleModal = () => {setUploadSchedule(false);};
+  const closeScheduleModal = () => {
+    setUploadSchedule(false);
+  };
   //  일정수정 모달
   const [schedule, setSchedule] = useState(false);
-  const closeSchedule = () => {setSchedule(false);};
-const [cardD, setcardD] = useState({
-    dayId:"",
+  const closeSchedule = () => {
+    setSchedule(false);
+  };
+  const [cardD, setcardD] = useState({
+    dayId: "",
     title: "",
     contents: "",
   });
   const cardData = (item) => {
     setSchedule(true);
-    setcardD({ dayId: item.dayId,title: item.title, contents: item.contents });
+    setcardD({ dayId: item.dayId, title: item.title, contents: item.contents });
   };
 
   const Dispatch = useDispatch();
@@ -57,44 +65,58 @@ const [cardD, setcardD] = useState({
 
   // 토글 클릭 시 변경
   const [toggle, setToggle] = useState(true);
-  const onClickHandler = () => {setToggle((prev) => !prev);};
-const titleRef=useRef();
-const contentsRef=useRef();
+  const onClickHandler = () => {
+    setToggle((prev) => !prev);
+  };
+  const titleRef = useRef();
+  const contentsRef = useRef();
 
-const updateTitleRef=useRef();
-const updateContentsRef=useRef();
+  const updateTitleRef = useRef();
+  const updateContentsRef = useRef();
 
-const onUpdateHandler =(itemId)=> {
-    const title=updateTitleRef.current.value;
-    const contents=updateContentsRef.current.value;
-    const findItem=dayData.filter((item)=>item.dayId===itemId);
-    const updatedItem={...findItem[0],title:title,contents:contents};
-    console.log(updatedItem);
+  const onUpdateHandler = (getId) => {
+    const title = updateTitleRef.current.value;
+    const contents = updateContentsRef.current.value;
 
-
-    Dispatch(updateSchedule(updatedItem));
-    alert('수정완료')
+    // const findItem=dayData.filter((item)=>item.dayId===itemId);
+    // const updatedItem={...findItem[0],title:title,contents:contents};
+    // console.log(updatedItem);
+    const newobj = { dayId: getId, title, contents };
+    Dispatch(updateSchedule(newobj));
+    alert("수정완료");
     closeSchedule();
-}
-// console.log(dayData[0].contents);
+  };
+  // console.log(dayData[0].contents);
 
-const onCreateHandler =()=>{
-   const title=titleRef.current.value;
-   const contents=contentsRef.current.value;
-   Dispatch(createSchedule({title:title,contents:contents}))
-   alert('완료');
-   
-}
+  const onCreateHandler = () => {
+    const title = titleRef.current.value;
+    const contents = contentsRef.current.value;
+    Dispatch(createSchedule({ title: title, contents: contents }));
+    alert("완료");
+  };
 
+  const deleteHandler = (getId) => {
+    Dispatch(deleteSchedule(getId));
+  };
   return (
     <>
       <Modal visible={uploadSchedule} closeModal={closeScheduleModal}>
         <h2 style={{ textAlign: "center" }}>일정을 적어주세요!</h2>
         <div>
           <h4>제목</h4>
-          <input ref={titleRef} name="title" type={"text"} placeholder={"제목"}></input>
+          <input
+            ref={titleRef}
+            name="title"
+            type={"text"}
+            placeholder={"제목"}
+          ></input>
           <h5>내용</h5>
-          <input ref={contentsRef} name="contents" type={"text"} placeholder={"내용"}></input>
+          <input
+            ref={contentsRef}
+            name="contents"
+            type={"text"}
+            placeholder={"내용"}
+          ></input>
         </div>
         <div>
           <Button onClick={onCreateHandler}>등록하기</Button>
@@ -103,30 +125,60 @@ const onCreateHandler =()=>{
       </Modal>
       <Modal visible={schedule} closeModal={closeSchedule} data={cardD}>
         <div style={{ margin: "auto", padding: "auto" }}>
-          {toggle ? (<p>{cardD.title}</p>) : (<input ref={updateTitleRef} type={"text"}placeholder={cardD.title}/>)}
-          {toggle ? (<p>{cardD.contents}</p>) : (<input ref={updateContentsRef} type={"text"} placeholder={cardD.contents}/>)}
-          {toggle ? (<Button onClick={onClickHandler}>수정하기</Button>) : (<Button onClick={()=>onUpdateHandler(cardD.dayId)}>수정완료</Button>)}
+          {toggle ? (
+            <p>{cardD.title}</p>
+          ) : (
+            <input
+              ref={updateTitleRef}
+              type={"text"}
+              placeholder={cardD.title}
+            />
+          )}
+          {toggle ? (
+            <p>{cardD.contents}</p>
+          ) : (
+            <input
+              ref={updateContentsRef}
+              type={"text"}
+              placeholder={cardD.contents}
+            />
+          )}
+          {toggle ? (
+            <Button onClick={onClickHandler}>수정하기</Button>
+          ) : (
+            <Button onClick={() => onUpdateHandler(cardD.dayId)}>
+              수정완료
+            </Button>
+          )}
           <Button onClick={closeSchedule}>되돌아가기</Button>
         </div>
       </Modal>
-     
+
       <Header />
       <MainBox>
-       
         <DaySection>
-        
-          {dayData.map((item) => (
-            <Card >
-              <Edit key={item.dayId} onClick={() => cardData(item)}>
-                <p>{item.title}</p>
-                <p>{item.contents}</p>
-              </Edit>
-            </Card>
-          ))}
+          {dayData.map((item) => {
+            return (
+              <Card>
+                <Edit key={item.dayId} onClick={() => cardData(item)}>
+                  <div>
+                    <p>{item.title}</p>
+                    <p>{item.contents}</p>
+                  </div>
+                </Edit>
+                <div onClick={() => deleteHandler(item.dayId)}>삭제하기</div>
+              </Card>
+            );
+          })}
         </DaySection>
-        <Button onClick={() => { setUploadSchedule(true);}}>일정 등록</Button>  
+        <Button
+          onClick={() => {
+            setUploadSchedule(true);
+          }}
+        >
+          일정 등록
+        </Button>
       </MainBox>
-   
     </>
   );
 };
@@ -185,11 +237,14 @@ const Button = styled.button`
     background-color: gainsboro;
   }
 `;
-const Edit =styled.div`
-width: 480px;
- height: 100px;
-&:hover {
+const Edit = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 480px;
+  height: 100px;
+  &:hover {
     text-decoration: underline;
     background-color: gainsboro;
   }
-`
+`;

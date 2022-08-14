@@ -8,7 +8,7 @@ const AuthContext = createContext({
 });
 
 export const AuthContextProvider = (props) => {
-  const initialToken = localStorage.getItem('token')
+  const initialToken = localStorage.getItem("token");
   const [token, setToken] = useState(null);
 
   //!! 참거짓 값을 부울로 바꿔줌
@@ -28,7 +28,9 @@ export const AuthContextProvider = (props) => {
 
   const contextValue = {
     token: token,
-    isLoggedIn: userIsLoggedIn,
+    //일단 임시로 treu로 해놓음
+    isLoggedIn: true,
+    // isLoggedIn: userIsLoggedIn,
     login: loginHandler,
     logout: logoutHandler,
   };

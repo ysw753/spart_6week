@@ -22,7 +22,7 @@ const Join = () => {
 
     setIsLoading(true);
     axios
-      .post(" http://localhost:5001/", { nickname, username, password })
+      .post(" http://localhost:5001/users", { nickname, username, password })
       .then((res) => console.log(res))
       .catch(() => alert("회원가입 실패"));
   };
