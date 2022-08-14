@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function Modal({ visible, closeModal,data,children}) {
-    console.log(data);
+function Modal({ visible, closeModal,children}) {
   return (
     <div className="Modal">
       <ModalWrap visible={visible}onClick={closeModal}></ModalWrap>

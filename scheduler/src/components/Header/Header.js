@@ -6,8 +6,8 @@ const Header = () => {
   return (
     <HeaderBox>
       <Box>
-        <button>로그아웃</button>
         <button>로그인</button>
+        <button>로그아웃</button>
       </Box>
     </HeaderBox>
   );

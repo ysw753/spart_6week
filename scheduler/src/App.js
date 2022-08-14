@@ -9,6 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+      
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
@@ -16,6 +17,7 @@ function App() {
         <Route path="/:id/main" element={<Main />} />
         <Route path="/detail" element={<Detail />} />
       </Routes>
+      
     </BrowserRouter>
   );
 }
