@@ -12,6 +12,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+      
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
@@ -20,6 +21,7 @@ function App() {
         {authCtx.isLoggedIn && <Route path="/detail" element={<Detail />} />}
         <Route path="*" element={<Main />} />
       </Routes>
+      
     </BrowserRouter>
   );
 }
