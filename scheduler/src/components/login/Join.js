@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useRef } from "react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
@@ -6,26 +8,47 @@ import { create } from "../../redux/userSlice";
 
 const Join = () => {
   const navigate = useNavigate();
-  const [state, setState] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  const goJoin = (e) => {
+  const nameInputRef = useRef();
+  const passwordInputRef = useRef();
+  const nickNameRef = useRef();
+  const submitHandler = async (e) => {
     e.preventDefault();
-    const username = e.currentTarget[0].value;
-    const nickname = e.currentTarget[1].value;
-    const password = e.currentTarget[2].value;
-    const paaswordCheck = e.currentTarget[3].value;
-    const userid = "useridawdxxa";
+    const nickname = nickNameRef.current.value;
+    const username = nameInputRef.current.value;
+    const password = passwordInputRef.current.value;
+    console.log("회원가입페이지", nickname, username, password);
 
-    const goBackendObj = { username, nickname, password, password };
-    const tmpReduxDataObj = { userid, username, nickname };
-    //백으로 보냄
-    //백에서 유효성 검사를 해서 잘되면 리덕스로 보냄
-
-    //일단은 리덕스로보냄
-    dispatch(create(tmpReduxDataObj));
-    navigate("/");
-    setState(true);
+    setIsLoading(true);
+    axios
+      .post(" http://localhost:5001/", { nickname, username, password })
+      .then((res) => console.log(res))
+      .catch(() => alert("회원가입 실패"));
   };
+  // axios
+  //   .post(
+  //     "https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=AIzaSyBWXwshOXBh6o-8PZ4anl622e7I_CQwtoU",
+  //     JSON.stringify({ nickname, username, password }),
+  //     {
+  //       headers: {
+  //         "Content-Type": `application/json`,
+  //       },
+  //     }
+  //   )
+  //   .then((res) => {
+  //     if (res.ok) {
+  //       setIsLoading(false);
+  //       alert("회원가입이 되었습니다.");
+  //       console.log(res);
+  //       navigate("/");
+  //     } else {
+  //       return res.json().then((data) => {
+  //         let errormessage = data.error.message;
+  //         console.log(errormessage);
+  //       });
+  //     }
+  //   });
 
   return (
     <>
@@ -34,15 +57,15 @@ const Join = () => {
 
       <FormBox>
         <h3>회원가입</h3>
-        <form onSubmit={goJoin}>
-          <input placeholder="이름" />
-          <input placeholder="닉네임" />
-          <input placeholder="비밀번호" minLength={8} />
-          <input placeholder="비밀번호확인" minLength={8} />
+        <form onSubmit={submitHandler}>
+          <input ref={nameInputRef} placeholder="이름" />
+          <input ref={nickNameRef} placeholder="닉네임" />
+          <input ref={passwordInputRef} placeholder="비밀번호" />
           <div>
             <button>가입하기</button>
           </div>
         </form>
+        {isLoading ? <p>회원가입중...</p> : null}
       </FormBox>
     </>
   );

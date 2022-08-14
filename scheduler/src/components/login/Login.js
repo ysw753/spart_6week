@@ -2,46 +2,62 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import axios from "axios";
+import { useContext } from "react";
+import AuthContext from "../../contextStore/auth-context";
 const Login = () => {
-  const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
-  const emailInputRef = useRef();
+  const nickNameRef = useRef();
   const passwordInputRef = useRef();
+
+  const authCtx = useContext(AuthContext);
   const goSignup = () => {
     navigate("/join");
   };
-  /*const goSubmit = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
-    const enteredEmail = emailInputRef.current.value;
-    const enteredPassword = passwordInputRef.current.value;
 
-    if (isLogin) {
-    } else {
+    const nickname = nickNameRef.current.value;
+    const password = passwordInputRef.current.value;
+    console.log("로그인페이지", nickname, password);
 
-      //{username ,nickname, password}
-      //요청보내기
-      axios
-        .post(url, JSON.stringify({ nickname, password }), {
-          headers: {
-            "Content-Type": `application/json`,
-          },
-        })
-        .then((res) => {
+    axios
+      .post("/auth/login", JSON.stringify({ nickname, password }), {
+        headers: {
+          "Content-Type": `application/json`,
+        },
+      })
+      .then((res) => {
+        if (res.ok) {
           console.log(res);
-        });
-    }
-    alert("로그인완료");
-    navigate("/:id/main");
-  };*/
 
+          return res.json();
+        } else {
+          return res.json().then((data) => {
+            let errormessage = "로그인 실패";
+            alert(errormessage);
+            throw new Error(errormessage);
+          });
+        }
+      })
+      .then((data) => {
+        //콘솔로 data에 토큰이 어디저장되는지 본다음에 토큰을 찍자
+        console.log(data);
+        alert("로그인 되었습니다.");
+        authCtx.login(data.accessToken);
+        navigate.replace("/");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
   return (
     <>
       <Title>SCHEDULER</Title>
 
       <FormBox>
         <h3>로그인</h3>
-        <form>
-          <input ref={emailInputRef} placeholder="id" />
+        <form onSubmit={submitHandler}>
+          <input ref={nickNameRef} placeholder="id" />
           <input
             ref={passwordInputRef}
             type="password"

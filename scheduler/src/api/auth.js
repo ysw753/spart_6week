@@ -1,4 +1,4 @@
-/*//로그인하고 로그인 정보가 맞다면 token이 로컬스토리지에 저장된다.
+//로그인하고 로그인 정보가 맞다면 token이 로컬스토리지에 저장된다.
 import axios from "axios";
 
 const API_URL = "/auth";
@@ -48,4 +48,4 @@ const authService = {
   getCurrentUser,
 };
 
-export default authService;*/
+export default authService;

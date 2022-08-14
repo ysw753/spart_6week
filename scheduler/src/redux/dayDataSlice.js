@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   value: [
     {
-      userid: "useridawdxxa",
       dayId: "dayidakxxx",
       text: "리액트를 공부하기",
       title: "공부하기",
