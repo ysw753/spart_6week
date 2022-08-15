@@ -13,7 +13,7 @@ const Login = () => {
   const goSignup = () => {
     navigate("/join");
   };
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     const nickname = nickNameRef.current.value;
@@ -21,34 +21,53 @@ const Login = () => {
     console.log("로그인페이지", nickname, password);
 
     axios
-      .post("/auth/login", JSON.stringify({ nickname, password }), {
-        headers: {
-          "Content-Type": `application/json`,
-        },
-      })
+      .post("http://13.209.76.88/auth/login", { nickname, password })
       .then((res) => {
-        if (res.ok) {
-          console.log(res);
-
-          return res.json();
-        } else {
-          return res.json().then((data) => {
-            let errormessage = "로그인 실패";
-            alert(errormessage);
-            throw new Error(errormessage);
-          });
-        }
+        console.log(res.data);
+        navigate("/");
+        return res.data;
       })
       .then((data) => {
-        //콘솔로 data에 토큰이 어디저장되는지 본다음에 토큰을 찍자
         console.log(data);
+
+        // 여기서 받은 data로 리덕스에 유저를 저장해야함
+        //근데 굳이 유저를 리덕스에 저장할 필요가 있나?
+        //그래서 컨텍스트 에저장함
+
         alert("로그인 되었습니다.");
-        authCtx.login(data.accessToken);
-        navigate.replace("/");
+        //authCtx.login(data.nickname, data);
+        authCtx.login(data.accessToken, data);
+        navigate("/");
       })
-      .catch((error) => {
-        alert(error.message);
-      });
+      .catch((error) => alert(error.message));
+    // .post("/auth/login", JSON.stringify({ nickname, password }), {
+    //   headers: {
+    //     "Content-Type": `application/json`,
+    //   },
+    // })
+    // .then((res) => {
+    //   if (res.ok) {
+    //     console.log(res);
+
+    //     return res.json();
+    //   } else {
+    //     return res.json().then((data) => {
+    //       let errormessage = "로그인 실패";
+    //       alert(errormessage);
+    //       throw new Error(errormessage);
+    //     });
+    //   }
+    // })
+    // .then((data) => {
+    //   //콘솔로 data에 토큰이 어디저장되는지 본다음에 토큰을 찍자
+    //   console.log(data);
+    //   alert("로그인 되었습니다.");
+    //   authCtx.login(data.accessToken);
+    //   navigate.replace("/");
+    // })
+    // .catch((error) => {
+    //   alert(error.message);
+    // });
   };
   return (
     <>
@@ -62,7 +81,6 @@ const Login = () => {
             ref={passwordInputRef}
             type="password"
             placeholder="password"
-            minLength={8}
           />
           <div>
             <button type="button" onClick={goSignup}>

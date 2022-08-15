@@ -8,17 +8,25 @@ const Header = () => {
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
   const isLoggedIn = authCtx.isLoggedIn;
+  const user = authCtx.user;
+  console.log(user);
   const logoutHandler = () => {
     authCtx.logout();
-    navigate.replace("/");
+    navigate("/");
+  };
+  const loginHandler = () => {
+    navigate("/login");
   };
   return (
     <HeaderBox>
       <Box>
         {isLoggedIn ? (
-          <button onClick={logoutHandler}>로그아웃</button>
+          <>
+            <p>{user.nickname}님 환영합니다</p>
+            <button onClick={logoutHandler}>로그아웃</button>
+          </>
         ) : (
-          <button>로그인</button>
+          <button onClick={loginHandler}>로그인</button>
         )}
       </Box>
     </HeaderBox>

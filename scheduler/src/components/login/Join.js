@@ -15,17 +15,38 @@ const Join = () => {
   const nickNameRef = useRef();
   const submitHandler = async (e) => {
     e.preventDefault();
+
     const nickname = nickNameRef.current.value;
     const username = nameInputRef.current.value;
     const password = passwordInputRef.current.value;
+    //닉네임 영어
+    // 유저네임 상관없음
+    // 패스워드 영문포함 5자이상
     console.log("회원가입페이지", nickname, username, password);
 
+    //const dataObj = { nickname, username, password };
     setIsLoading(true);
     axios
-      .post(" http://localhost:5001/users", { nickname, username, password })
-      .then((res) => console.log(res))
-      .catch(() => alert("회원가입 실패"));
+      .post(
+        "http://13.209.76.88/auth/signup",
+        //{
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },dataObj
+        //}
+        { nickname, username, password }
+      )
+      .then((res) => {
+        console.log(res);
+        setIsLoading(false);
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("회원가입 실패");
+      });
   };
+
   // axios
   //   .post(
   //     "https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=AIzaSyBWXwshOXBh6o-8PZ4anl622e7I_CQwtoU",
@@ -58,8 +79,8 @@ const Join = () => {
       <FormBox>
         <h3>회원가입</h3>
         <form onSubmit={submitHandler}>
-          <input ref={nameInputRef} placeholder="이름" />
           <input ref={nickNameRef} placeholder="닉네임" />
+          <input ref={nameInputRef} placeholder="이름" />
           <input ref={passwordInputRef} placeholder="비밀번호" />
           <div>
             <button>가입하기</button>
