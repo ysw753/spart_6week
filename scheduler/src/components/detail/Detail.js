@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import Header from "../Header/Header";
 import Modal from "./Modal";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createSchedule,
   deleteSchedule,
   updateSchedule,
 } from "../../redux/dayDataSlice";
+import axios from "axios";
+import AuthContext from "../../contextStore/auth-context";
 
 // const DUMMY = [
 //   {
@@ -39,6 +41,39 @@ import {
 // ];
 
 const Detail = () => {
+  // 1. 토큰으로  get요청을 보낸다.
+  // 2. 받아서 state에 저장한다.
+  // 3. 뿌린다.
+  const authCtx = useContext(AuthContext);
+  const accessToken = authCtx.token;
+  const [fetchDayData, setFetchDayDate] = useState([]);
+  const [isDataLoading, setDataLoading] = useState(true);
+  const getFetch = async () => {
+    axios
+      .get("http://13.209.76.88/api/post/day", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        setDataLoading(false);
+        setFetchDayDate(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  //day생성 포스트 요청 보냄
+
+  //day 수정 포스트 요청보냄
+
+  useEffect(() => {
+    getFetch();
+  }, []);
+
   // 일정등록 모달
   const [uploadSchedule, setUploadSchedule] = useState(false);
   const closeScheduleModal = () => {
@@ -87,12 +122,31 @@ const Detail = () => {
     closeSchedule();
   };
   // console.log(dayData[0].contents);
-
+  const createFetch = async (data) => {
+    axios
+      .post("http://13.209.76.88/api/post", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        data,
+      })
+      .then((res) => {
+        console.log(res);
+        //setDataLoading(false);
+        alert("완료");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const onCreateHandler = () => {
     const title = titleRef.current.value;
     const contents = contentsRef.current.value;
-    Dispatch(createSchedule({ title: title, contents: contents }));
-    alert("완료");
+    const data = { title, contents };
+    createFetch(data);
+
+    //Dispatch(createSchedule({ title: title, contents: contents }));
   };
 
   const deleteHandler = (getId) => {
@@ -155,30 +209,34 @@ const Detail = () => {
       </Modal>
 
       <Header />
-      <MainBox>
-        <DaySection>
-          {dayData.map((item) => {
-            return (
-              <Card>
-                <Edit key={item.dayId} onClick={() => cardData(item)}>
-                  <div>
-                    <p>{item.title}</p>
-                    <p>{item.contents}</p>
-                  </div>
-                </Edit>
-                <div onClick={() => deleteHandler(item.dayId)}>삭제하기</div>
-              </Card>
-            );
-          })}
-        </DaySection>
-        <Button
-          onClick={() => {
-            setUploadSchedule(true);
-          }}
-        >
-          일정 등록
-        </Button>
-      </MainBox>
+      {isDataLoading ? (
+        <MainBox>
+          <DaySection>
+            {dayData.map((item) => {
+              return (
+                <Card>
+                  <Edit key={item.dayId} onClick={() => cardData(item)}>
+                    <div>
+                      <p>{item.title}</p>
+                      <p>{item.contents}</p>
+                    </div>
+                  </Edit>
+                  <div onClick={() => deleteHandler(item.dayId)}>삭제하기</div>
+                </Card>
+              );
+            })}
+          </DaySection>
+          <Button
+            onClick={() => {
+              setUploadSchedule(true);
+            }}
+          >
+            일정 등록
+          </Button>
+        </MainBox>
+      ) : (
+        <p>조금만 기다려주세요~~!</p>
+      )}
     </>
   );
 };

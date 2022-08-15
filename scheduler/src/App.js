@@ -4,7 +4,7 @@ import Login from "./components/login/Login";
 import Main from "./components/main/Main";
 import Detail from "./components/detail/Detail";
 import Join from "./components/login/Join";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AuthContext from "./contextStore/auth-context";
 
 function App() {
@@ -12,16 +12,14 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-      
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
-
-        <Route path="/:id/main" element={<Main />} />
-        {authCtx.isLoggedIn && <Route path="/detail" element={<Detail />} />}
+        <Route path="/detail" element={<Detail />} />
+        {/* <Route path="/:id/main" element={<Main />} /> */}
+        {/* {authCtx.isLoggedIn && <Route path="/detail" element={<Detail />} />} */}
         <Route path="*" element={<Main />} />
       </Routes>
-      
     </BrowserRouter>
   );
 }

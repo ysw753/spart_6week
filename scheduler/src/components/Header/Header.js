@@ -22,7 +22,7 @@ const Header = () => {
       <Box>
         {isLoggedIn ? (
           <>
-            <p>{user.nickname}님 환영합니다</p>
+            <p>{user?.nickname}님 환영합니다</p>
             <button onClick={logoutHandler}>로그아웃</button>
           </>
         ) : (

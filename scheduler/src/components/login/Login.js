@@ -36,7 +36,7 @@ const Login = () => {
 
         alert("로그인 되었습니다.");
         //authCtx.login(data.nickname, data);
-        authCtx.login(data.accessToken, data);
+        authCtx.login(data, nickname);
         navigate("/");
       })
       .catch((error) => alert(error.message));

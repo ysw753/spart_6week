@@ -1,34 +1,73 @@
+import axios from "axios";
 import { createContext } from "react";
 import { useState } from "react";
 const AuthContext = createContext({
   token: "",
   isLoggedIn: false,
-  login: (token, user) => {},
+  login: (data, user) => {},
   logout: () => {},
   user: {},
 });
 
 export const AuthContextProvider = (props) => {
-  const initialToken = localStorage.getItem("token");
-  const [token, setToken] = useState(null);
+  const initialToken = localStorage.getItem("accessToken");
+
+  const [accessToken, setAccessToken] = useState(initialToken);
+  const [refreshToken, setRefreshToken] = useState(null);
   const [user, setUser] = useState();
   //!! 참거짓 값을 부울로 바꿔줌
   //토큰이 빈 문자열이면 fasle를
   //토큰이 빈 문자열이 아니면 true를
-  const userIsLoggedIn = !!token;
 
-  const loginHandler = (token, user) => {
-    setToken(token);
-    localStorage.setItem("token", token);
+  const userIsLoggedIn = !!accessToken;
+  const loginHandler = (data, user) => {
+    //참고로 여기서 token은 백에서 받아온거지만
+    // 백에서는 토큰만 주기때문에 user는 내가 넣은값임
+
     setUser(user);
+    localStorage.setItem("accessToken", data.accessToken);
+    localStorage.setItem("refreshToken", data.refreshToken);
+    setAccessToken(data.accessToken);
+    setRefreshToken(data.refreshToken);
+    //const expireTime = data.accessTokenExpiresIn;
+
+    const fetchDate = async (localaccessToken, localrefreshToken) => {
+      axios
+        .post("http://13.209.76.88/auth/reissue", {
+          accessToken: localaccessToken,
+          refreshToken: localrefreshToken,
+        })
+        .then((res) => {
+          console.log(res.data);
+          return res.data;
+        })
+        .then((data) => {
+          console.log(data);
+          // localStorage.removeItem("accessToken", accessToken);
+          // localStorage.removeItem("refreshToken", refreshToken);
+          setAccessToken(data.accessToken);
+          setRefreshToken(data.refreshToken);
+          localStorage.setItem("accessToken", data.accessToken);
+          localStorage.setItem("refreshToken", data.refreshToken);
+        });
+    };
+    setInterval(() => {
+      const localaccessToken = localStorage.getItem("accessToken");
+      const localrefreshToken = localStorage.getItem("refreshToken");
+      console.log(localaccessToken, localrefreshToken);
+      fetchDate(localaccessToken, localrefreshToken);
+    }, 10000);
   };
   const logoutHandler = () => {
-    setToken(null);
-    localStorage.removeItem("token");
+    setAccessToken(null);
+    setRefreshToken(null);
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
   };
 
   const contextValue = {
-    token: token,
+    accessToken: accessToken,
+    refreshToken: refreshToken,
     //일단 임시로 treu로 해놓음
     //isLoggedIn: true,
     isLoggedIn: userIsLoggedIn,
