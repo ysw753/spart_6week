@@ -9,6 +9,9 @@ const Main = () => {
   const goDay = () => {
     navigate("/detail");
   };
+  const goWeek=()=>{
+    navigate('/weekdetail')
+  }
 
   return (
     <>
@@ -28,7 +31,7 @@ const Main = () => {
             <p>나는 오늘 무엇을 할까요?</p>
           </DaySection>
           <EtcSection>
-            <WeekSection>주간스케쥴</WeekSection>
+            <WeekSection onClick={goWeek}>주간스케쥴</WeekSection>
             <MonthSection>월간스케쥴</MonthSection>
           </EtcSection>
         </MainBox>
@@ -40,7 +43,7 @@ export default Main;
 const MainBox = styled.div`
   width: 1000px;
   min-width: 1000px;
-
+  
   margin: auto;
 `;
 

@@ -19,9 +19,10 @@ function App() {
         {/* <Route path="/detail" element={<Detail />} /> */}
         {/* <Route path="/:id/main" element={<Main />} /> */}
         {authCtx.isLoggedIn && <Route path="/detail" element={<Detail />} />}
-        {authCtx.isLoggedIn && (
+        {/* {authCtx.isLoggedIn && (
           <Route path="/weekdetail" element={<WeekDetail />} />
-        )}
+        )} */}
+        <Route path="/weekdetail" element={<WeekDetail />}/>
         <Route path="*" element={<Main />} />
       </Routes>
     </BrowserRouter>
