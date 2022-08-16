@@ -5,8 +5,7 @@ import Header from "../Header/Header";
 
 const Main = () => {
   const navigate = useNavigate();
-  const user = useSelector((state) => state.userData.user);
-  console.log(user);
+
   const goDay = () => {
     navigate("/detail");
   };
@@ -24,7 +23,10 @@ const Main = () => {
           </p>
         </Left>
         <MainBox>
-          <DaySection onClick={goDay}>일간스케쥴</DaySection>
+          <DaySection onClick={goDay}>
+            일간스케쥴
+            <p>나는 오늘 무엇을 할까요?</p>
+          </DaySection>
           <EtcSection>
             <WeekSection>주간스케쥴</WeekSection>
             <MonthSection>월간스케쥴</MonthSection>

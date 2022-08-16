@@ -20,16 +20,18 @@ export const AuthContextProvider = (props) => {
   //토큰이 빈 문자열이 아니면 true를
 
   const userIsLoggedIn = !!accessToken;
+
   const loginHandler = (data, user) => {
     //참고로 여기서 token은 백에서 받아온거지만
     // 백에서는 토큰만 주기때문에 user는 내가 넣은값임
-
+    const expireTime = data.accessTokenExpiresIn;
     setUser(user);
     localStorage.setItem("accessToken", data.accessToken);
     localStorage.setItem("refreshToken", data.refreshToken);
+
+    //fleshtoken활성화하기
     setAccessToken(data.accessToken);
     setRefreshToken(data.refreshToken);
-    //const expireTime = data.accessTokenExpiresIn;
 
     const fetchDate = async (localaccessToken, localrefreshToken) => {
       axios
@@ -51,12 +53,12 @@ export const AuthContextProvider = (props) => {
           localStorage.setItem("refreshToken", data.refreshToken);
         });
     };
-    setInterval(() => {
+    setTimeout(() => {
       const localaccessToken = localStorage.getItem("accessToken");
       const localrefreshToken = localStorage.getItem("refreshToken");
       console.log(localaccessToken, localrefreshToken);
       fetchDate(localaccessToken, localrefreshToken);
-    }, 10000);
+    }, expireTime);
   };
   const logoutHandler = () => {
     setAccessToken(null);

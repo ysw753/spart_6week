@@ -9,7 +9,7 @@ const Header = () => {
   const navigate = useNavigate();
   const isLoggedIn = authCtx.isLoggedIn;
   const user = authCtx.user;
-  console.log(user);
+
   const logoutHandler = () => {
     authCtx.logout();
     navigate("/");
@@ -22,7 +22,7 @@ const Header = () => {
       <Box>
         {isLoggedIn ? (
           <>
-            <p>{user?.nickname}님 환영합니다</p>
+            <p>{user}님 환영합니다</p>
             <button onClick={logoutHandler}>로그아웃</button>
           </>
         ) : (
