@@ -16,13 +16,19 @@ const WeekDetail = () => {
   const closeSchedule = () => {
     setweekSchedule(false);
   };
+  const [toggle, setToggle] = useState(false);
+
+  const onClickHandler = () => {
+    setToggle(toggle => !toggle)
+  };
+
 
   const weekTitleRef = useRef();
   const weekContentsRef = useRef();
 
   // const onCreateHandler = async () => {
-  //   const title = weekTitleRef.current.value;
-  //   const contents = weekContentsRef.current.value;
+  //   const title = weekTitleRef.current.id;
+  //   const contents = weekContentsRef.current.id;
   //   const data = { title, contents };
     
   return (
@@ -47,13 +53,13 @@ const WeekDetail = () => {
           <label for="sat">토요일</label><br></br>
        </div>
         제목 <input 
-            // ref={weekTitleRef}
+            ref={weekTitleRef}
             name="title"
             type={"text"}
             placeholder={"제목"}>
             </input>
         내용 <input
-            // ref={weekContentsRef}
+            ref={weekContentsRef}
             name="contents"
             type={"text"}
             placeholder={"내용"}>
@@ -68,38 +74,48 @@ const WeekDetail = () => {
         <p style={{fontSize:'30px',textAlign:'center'}}>week page</p>
         <WeekBox>
         <Day>일
-        <VscEdit size='15'style={{cursor: 'pointer'}}/>
-        <P>title</P>
-        <div style={{marginTop:'50px'}}>삭제하기</div>
+        <VscEdit size='15'style={{cursor: 'pointer'}}onClick={()=>{onClickHandler()}}/>
+        {toggle?( <P>title</P>):(<input id="sun" type='text'></input>)}
+        {toggle?( <P>content</P>):(<input id="sun" type='text'></input>)}
+        <div style={{margin:'autopx'}}>삭제하기</div>
         </Day>
         <Day>월
-        <VscEdit size='15'style={{cursor: 'pointer'}}/>
-        <P>title</P>
+        <VscEdit size='15'style={{cursor: 'pointer'}}onClick={()=>{onClickHandler()}}/>
+        {toggle?( <P>title</P>):(<input id="mon" type='text'></input>)}
+        {toggle?( <P>content</P>):(<input id="mon" type='text'></input>)}
         </Day>
         <Day>화
-        <VscEdit size='15'style={{cursor: 'pointer'}}/>
-        <P>title</P>
+        <VscEdit size='15'style={{cursor: 'pointer'}}onClick={()=>{onClickHandler()}}/>
+        {toggle?( <P>title</P>):(<input id="tue" type='text'></input>)}
+        {toggle?( <P>content</P>):(<input id="tue" type='text'></input>)}
         </Day>
         <Day>수
-        <VscEdit size='15'style={{cursor: 'pointer'}}/>
-        <P>title</P>
+        <VscEdit size='15'style={{cursor: 'pointer'}}onClick={()=>{onClickHandler()}}/>
+        {toggle?( <P>title</P>):(<input id="wed" type='text'></input>)}
+        {toggle?( <P>content</P>):(<input id="wed" type='text'></input>)}
         </Day>
         <Day>목
-        <VscEdit size='15'style={{cursor: 'pointer'}}/>
-        <P>title</P>
+        <VscEdit size='15'style={{cursor: 'pointer'}}onClick={()=>{onClickHandler()}}/>
+        {toggle?( <P>title</P>):(<input id="thu"type='text'></input>)}
+        {toggle?( <P>content</P>):(<input id="thu" type='text'></input>)}
         </Day>
         <Day>금
-        <VscEdit size='15'style={{cursor: 'pointer'}}/>
-        <P>title</P>
+        <VscEdit size='15'style={{cursor: 'pointer'}}onClick={()=>{onClickHandler()}}/>
+        {toggle?( <P>title</P>):(<input id="fri" type='text'></input>)}
+        {toggle?( <P>content</P>):(<input id="fri" type='text'></input>)}
         </Day>
         <Day>토
-        <VscEdit size='15'style={{cursor: 'pointer'}}/>
-        <P>title</P>
+        <VscEdit size='15'style={{cursor: 'pointer'}}onClick={()=>{onClickHandler()}}/>
+        {toggle?( <P>title</P>):(<input id="sat" type='text'></input>)}
+        {toggle?( <P>content</P>):(<input id="sat" type='text'></input>)}
         </Day>
         </WeekBox>
-        <div style={{marginLeft:'700px',marginTop:'100px'}}>
+        <div style={{marginLeft:'700px'}}>
         <Button onClick={()=>{setweekSchedule(true)}}>일정 등록</Button>
         </div>
+        
+        {toggle?(null):(<Button style={{marginLeft:'700px',marginTop:'30px'}} onClick={{}}>수정 완료</Button>)}
+  
       </WeekView>
     </>
   );
@@ -133,7 +149,7 @@ const WeekBox= styled.div`
 const Button = styled.button`
   position : absoulte;
   margin: auto;
-  padding-top: 10px;
+  paddingn: autopx;
   padding-bottom: 10px;
   padding-left: 30px;
   padding-right: 30px;
@@ -148,6 +164,6 @@ const Button = styled.button`
   }
 `;
 const P= styled.div`
-margin-top:60px;
+marginn:9auto
 text-align:left;
 `
