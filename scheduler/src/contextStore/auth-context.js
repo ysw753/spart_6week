@@ -56,6 +56,7 @@ export const AuthContextProvider = (props) => {
           localStorage.setItem("refreshToken", data.refreshToken);
         });
     };
+    console.log("loveyou");
     setInterval(() => {
       const localaccessToken = localStorage.getItem("accessToken");
       const localrefreshToken = localStorage.getItem("refreshToken");
