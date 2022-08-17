@@ -46,7 +46,9 @@ const Join = () => {
         alert("회원가입 실패");
       });
   };
-
+  const goBack = () => {
+    navigate("/login");
+  };
   // axios
   //   .post(
   //     "https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=AIzaSyBWXwshOXBh6o-8PZ4anl622e7I_CQwtoU",
@@ -83,6 +85,9 @@ const Join = () => {
           <input ref={nameInputRef} placeholder="이름" />
           <input ref={passwordInputRef} placeholder="비밀번호" />
           <div>
+            <button type="button" onClick={goBack}>
+              뒤로
+            </button>
             <button>가입하기</button>
           </div>
         </form>
@@ -94,10 +99,11 @@ const Join = () => {
 export default Join;
 
 const Title = styled.h1`
+  margin-top: 100px;
   text-align: center;
 `;
 const FormBox = styled.div`
-  background-color: gray;
+  background-color: #cdc7ee;
   width: 500px;
   height: 500px;
   display: flex;

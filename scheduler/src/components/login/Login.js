@@ -95,10 +95,11 @@ const Login = () => {
 };
 export default Login;
 const Title = styled.h1`
+  margin-top: 100px;
   text-align: center;
 `;
 const FormBox = styled.div`
-  background-color: gray;
+  background-color: #cdc7ee;
   width: 500px;
   height: 500px;
   display: flex;

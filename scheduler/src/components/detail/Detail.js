@@ -184,6 +184,7 @@ const Detail = () => {
       //성공하면 우리 데이터에 저장을 시켜줘야함
       //changeState변화줌
       setChangeState((prev) => !prev);
+      closeScheduleModal();
     } catch (error) {
       console.log(error);
     }

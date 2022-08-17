@@ -25,6 +25,9 @@ export const AuthContextProvider = (props) => {
     //참고로 여기서 token은 백에서 받아온거지만
     // 백에서는 토큰만 주기때문에 user는 내가 넣은값임
     const expireTime = data.accessTokenExpiresIn;
+    console.log(typeof expireTime);
+    console.log(data);
+    console.log(expireTime);
     setUser(user);
     localStorage.setItem("accessToken", data.accessToken);
     localStorage.setItem("refreshToken", data.refreshToken);
@@ -53,11 +56,12 @@ export const AuthContextProvider = (props) => {
           localStorage.setItem("refreshToken", data.refreshToken);
         });
     };
-    setTimeout(() => {
+    setInterval(() => {
       const localaccessToken = localStorage.getItem("accessToken");
       const localrefreshToken = localStorage.getItem("refreshToken");
       console.log(localaccessToken, localrefreshToken);
-      fetchDate(localaccessToken, localrefreshToken);
+      if (contextValue.isLoggedIn)
+        fetchDate(localaccessToken, localrefreshToken);
     }, expireTime);
   };
   const logoutHandler = () => {

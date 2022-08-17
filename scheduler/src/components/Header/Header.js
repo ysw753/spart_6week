@@ -20,6 +20,7 @@ const Header = () => {
   return (
     <HeaderBox>
       <Box>
+        <BackBtn>홈</BackBtn>
         {isLoggedIn ? (
           <>
             <p>{user}님 환영합니다</p>
@@ -35,9 +36,10 @@ const Header = () => {
 export default Header;
 
 const Box = styled.div`
-  background-color: gray;
+  position: relative;
+  background-color: #cdc7ee;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin: auto;
   width: 1000px;
@@ -46,12 +48,14 @@ const Box = styled.div`
     height: 50px;
   }
 `;
-
+const BackBtn = styled.div`
+  position: absolute;
+  left: 0;
+`;
 const HeaderBox = styled.div`
   display: flex;
-  justify-content: right;
   align-items: center;
-  background-color: red;
+  background-color: #cdc7ee;
   top: 0;
   height: 100px;
   width: 100%;

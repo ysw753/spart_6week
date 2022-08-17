@@ -5,12 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
 import { VscEdit } from "react-icons/vsc";
 import axios from "axios";
-import AuthContext from "../../contextStore/auth-context";
-
-const mapFnc = () => {};
+import { useNavigate } from "react-router-dom";
 
 const WeekDetail = () => {
   const [weekSchedule, setweekSchedule] = useState(false);
+  const navigate = useNavigate();
+
   const closeSchedule = () => {
     setweekSchedule(false);
   };
@@ -175,7 +175,9 @@ const WeekDetail = () => {
       );
       //성공하면 우리 데이터에 저장을 시켜줘야함
       //changeState변화줌
+
       setChangeState((prev) => !prev);
+      closeSchedule();
     } catch (error) {
       console.log(error);
     }
@@ -304,7 +306,7 @@ const WeekDetail = () => {
 
       <WeekView>
         <p style={{ fontSize: "30px", textAlign: "center" }}>week page</p>
-
+        <button onClick={() => navigate("/detail")}>day</button>
         <WeekBox>
           <Day>
             일

@@ -9,31 +9,29 @@ const Main = () => {
   const goDay = () => {
     navigate("/detail");
   };
-  const goWeek=()=>{
-    navigate('/weekdetail')
-  }
+  const goWeek = () => {
+    navigate("/weekdetail");
+  };
 
   return (
     <>
       <Header />
       <Section>
-        <Left>
+        {/* <Left>
           <Img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/William_James_b1842c.jpg/220px-William_James_b1842c.jpg" />
           <p>
             "생각이 바뀌면 행동이 바뀌고, 행동이 바뀌면 습관이 바뀌며, 습관이
             바뀌면 인격 또한 바뀌고, 인격이 바뀌면 운명 까지도 바뀐다" -Williams
             James-
           </p>
-        </Left>
+        </Left> */}
         <MainBox>
           <DaySection onClick={goDay}>
             일간스케쥴
             <p>나는 오늘 무엇을 할까요?</p>
           </DaySection>
-          <EtcSection>
-            <WeekSection onClick={goWeek}>주간스케쥴</WeekSection>
-            <MonthSection>월간스케쥴</MonthSection>
-          </EtcSection>
+
+          <WeekSection onClick={goWeek}>주간스케쥴</WeekSection>
         </MainBox>
       </Section>
     </>
@@ -41,29 +39,32 @@ const Main = () => {
 };
 export default Main;
 const MainBox = styled.div`
-  width: 1000px;
-  min-width: 1000px;
-  
+  width: 800px;
+  min-width: 800px;
+
   margin: auto;
+  margin-top: 30px;
 `;
 
 const DaySection = styled.div`
-  background-color: green;
-
+  &:hover {
+    cursor: pointer;
+  }
+  margin-bottom: 20px;
+  border: 5px solid #3d336e;
   height: 300px;
-`;
-const EtcSection = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const WeekSection = styled.div`
-  width: 500px;
+  &:hover {
+    cursor: pointer;
+  }
+  border: 5px solid #3d336e;
   height: 300px;
-  background-color: yellow;
 `;
 const MonthSection = styled.div`
+  border: 10px solid #3d336e;
+  margin: 10px;
   width: 500px;
   height: 300px;
   background-color: blue;

@@ -16,13 +16,14 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
-        {/* <Route path="/detail" element={<Detail />} /> */}
-        {/* <Route path="/:id/main" element={<Main />} /> */}
+        <Route path="/detail" element={<Detail />} />
+
         {authCtx.isLoggedIn && <Route path="/detail" element={<Detail />} />}
-        {/* {authCtx.isLoggedIn && (
+        {authCtx.isLoggedIn && (
           <Route path="/weekdetail" element={<WeekDetail />} />
-        )} */}
-        <Route path="/weekdetail" element={<WeekDetail />}/>
+        )}
+        {/* <Route path="/weekdetail" element={<WeekDetail />} /> */}
+        {/* {authCtx.isLoggedIn && <Route path="/weekdetail" element={<Detail />} />} */}
         <Route path="*" element={<Main />} />
       </Routes>
     </BrowserRouter>
