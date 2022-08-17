@@ -16,63 +16,73 @@ const WeekDetail = () => {
   };
   const [toggle, setToggle] = useState(false);
 
-  const onClickHandler = () => {
+  const toggleFnc = () => {};
+  const [dayToggle, setDayToggle] = useState("");
+  const onClickHandler = (day) => {
     setToggle((toggle) => !toggle);
+    if (day === "sun") setDayToggle("sun");
+    if (day === "mon") setDayToggle("mon");
+    if (day === "tue") setDayToggle("tue");
+    if (day === "wed") setDayToggle("wed");
+    if (day === "thu") setDayToggle("thu");
+    if (day === "fri") setDayToggle("fri");
+    if (day === "sat") setDayToggle("sat");
+    //if (toggle)
   };
 
   const weekTitleRef = useRef();
   const weekContentsRef = useRef();
 
-  //데이터 불러오기
-  const [fetchWeekData, setFetchWeedData] = useState([]);
-  const [changeState, setChangeState] = useState(false);
+  // //데이터 불러오기
+  // const [fetchWeekData, setFetchWeedData] = useState([]);
+  // const [changeState, setChangeState] = useState(false);
 
-  //get
-  const getFetch = async () => {
-    axios
-      .get(
-        "url",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        const getfetchdata = res.data.daylist;
-        console.log(res.data.daylist);
-        setFetchWeedData(getfetchdata);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // //get
+  // const getFetch = async () => {
+  //   axios
+  //     .get(
+  //       "url",
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${accessToken}`,
+  //         },
+  //       },
+  //       { withCredentials: true }
+  //     )
+  //     .then((res) => {
+  //       const getfetchdata = res.data.daylist;
+  //       console.log(res.data.daylist);
+  //       setFetchWeedData(getfetchdata);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
-  //create
-  const createFetch = axios.create({
-    BASE_URL: "",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    withCredentials: true,
-  });
+  // //create
+  // const createFetch = axios.create({
+  //   BASE_URL: "",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${accessToken}`,
+  //   },
+  //   withCredentials: true,
+  // });
 
-  const onCreateHandler = async () => {
-    const title = titleRef.current.value;
-    const contents = contentsRef.current.value;
-    const data = { title, contents };
-    try {
-      const res = await createFetch.post("", JSON.stringify(data));
-      //성공하면 우리 데이터에 저장을 시켜줘야함
-      //changeState변화줌
-      setChangeState((prev) => !prev);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const onCreateHandler = async () => {
+  //   const title = titleRef.current.value;
+  //   const contents = contentsRef.current.value;
+  //   const data = { title, contents };
+  //   try {
+  //     const res = await createFetch.post("", JSON.stringify(data));
+  //     //성공하면 우리 데이터에 저장을 시켜줘야함
+  //     //changeState변화줌
+  //     setChangeState((prev) => !prev);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <>
@@ -121,94 +131,172 @@ const WeekDetail = () => {
           <Button onClick={closeSchedule}>취소</Button>
         </div>
       </Modal>
+      {/* -------------------------------------------------------------------------------- */}
 
       <WeekView>
         <p style={{ fontSize: "30px", textAlign: "center" }}>week page</p>
+
         <WeekBox>
           <Day>
             일
-            <VscEdit
-              size="15"
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                onClickHandler();
-              }}
-            />
-            {toggle ? <P>title</P> : <input id="sun" type="text"></input>}
-            {toggle ? <P>content</P> : <input id="sun" type="text"></input>}
-            <div style={{ margin: "autopx" }}>삭제하기</div>
+            <div>
+              <div>
+                {toggle && dayToggle === "sun" ? (
+                  <div>
+                    <input id="sun" value="sun" type="text"></input>
+                    <input id="sun" value="sun" type="text"></input>
+                  </div>
+                ) : (
+                  <div>
+                    <p>title</p>
+                    <p>content</p>
+                  </div>
+                )}
+              </div>
+              <VscEdit
+                size="15"
+                style={{ cursor: "pointer" }}
+                onClick={() => onClickHandler("sun")}
+              />
+            </div>
           </Day>
           <Day>
             월
-            <VscEdit
-              size="15"
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                onClickHandler();
-              }}
-            />
-            {toggle ? <P>title</P> : <input id="mon" type="text"></input>}
-            {toggle ? <P>content</P> : <input id="mon" type="text"></input>}
+            <div>
+              <div>
+                {toggle && dayToggle === "mon" ? (
+                  <div>
+                    <input id="mon" value="mon" type="text"></input>
+                    <input id="mon" value="mon" type="text"></input>
+                  </div>
+                ) : (
+                  <div>
+                    <p>title</p>
+                    <p>content</p>
+                  </div>
+                )}
+              </div>
+              <VscEdit
+                size="15"
+                style={{ cursor: "pointer" }}
+                onClick={() => onClickHandler("mon")}
+              />
+            </div>
           </Day>
           <Day>
             화
-            <VscEdit
-              size="15"
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                onClickHandler();
-              }}
-            />
-            {toggle ? <P>title</P> : <input id="tue" type="text"></input>}
-            {toggle ? <P>content</P> : <input id="tue" type="text"></input>}
+            <div>
+              <div>
+                {toggle && dayToggle === "tue" ? (
+                  <div>
+                    <input id="tue" value="tue" type="text"></input>
+                    <input id="tue" value="tue" type="text"></input>
+                  </div>
+                ) : (
+                  <div>
+                    <p>title</p>
+                    <p>content</p>
+                  </div>
+                )}
+              </div>
+              <VscEdit
+                size="15"
+                style={{ cursor: "pointer" }}
+                onClick={() => onClickHandler("tue")}
+              />
+            </div>
           </Day>
           <Day>
             수
-            <VscEdit
-              size="15"
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                onClickHandler();
-              }}
-            />
-            {toggle ? <P>title</P> : <input id="wed" type="text"></input>}
-            {toggle ? <P>content</P> : <input id="wed" type="text"></input>}
+            <div>
+              <div>
+                {toggle && dayToggle === "wed" ? (
+                  <div>
+                    <input id="wed" value="wed" type="text"></input>
+                    <input id="wed" value="wed" type="text"></input>
+                  </div>
+                ) : (
+                  <div>
+                    <p>title</p>
+                    <p>content</p>
+                  </div>
+                )}
+              </div>
+              <VscEdit
+                size="15"
+                style={{ cursor: "pointer" }}
+                onClick={() => onClickHandler("wed")}
+              />
+            </div>
           </Day>
           <Day>
             목
-            <VscEdit
-              size="15"
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                onClickHandler();
-              }}
-            />
-            {toggle ? <P>title</P> : <input id="thu" type="text"></input>}
-            {toggle ? <P>content</P> : <input id="thu" type="text"></input>}
+            <div>
+              <div>
+                {toggle && dayToggle === "thu" ? (
+                  <div>
+                    <input id="thu" value="thu" type="text"></input>
+                    <input id="thu" value="thu" type="text"></input>
+                  </div>
+                ) : (
+                  <div>
+                    <p>title</p>
+                    <p>content</p>
+                  </div>
+                )}
+              </div>
+              <VscEdit
+                size="15"
+                style={{ cursor: "pointer" }}
+                onClick={() => onClickHandler("thu")}
+              />
+            </div>
           </Day>
           <Day>
             금
-            <VscEdit
-              size="15"
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                onClickHandler();
-              }}
-            />
-            {toggle ? <P>title</P> : <input id="fri" type="text"></input>}
-            {toggle ? <P>content</P> : <input id="fri" type="text"></input>}
+            <div>
+              <div>
+                {toggle && dayToggle === "fri" ? (
+                  <div>
+                    <input id="fri" value="fri" type="text"></input>
+                    <input id="fri" value="fri" type="text"></input>
+                  </div>
+                ) : (
+                  <div>
+                    <p>title</p>
+                    <p>content</p>
+                  </div>
+                )}
+              </div>
+              <VscEdit
+                size="15"
+                style={{ cursor: "pointer" }}
+                onClick={() => onClickHandler("fri")}
+              />
+            </div>
           </Day>
           <Day>
             토
-            <VscEdit
-              size="15"
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                onClickHandler();
-              }}
-            />
-            {toggle ? <P>title</P> : <input id="sat" type="text"></input>}
-            {toggle ? <P>content</P> : <input id="sat" type="text"></input>}
+            <div>
+              <div>
+                {toggle && dayToggle === "sat" ? (
+                  <div>
+                    <input id="sat" value="sat" type="text"></input>
+                    <input id="sat" value="sat" type="text"></input>
+                  </div>
+                ) : (
+                  <div>
+                    <p>title</p>
+                    <p>content</p>
+                  </div>
+                )}
+              </div>
+              <VscEdit
+                size="15"
+                style={{ cursor: "pointer" }}
+                onClick={() => onClickHandler("sat")}
+              />
+            </div>
           </Day>
         </WeekBox>
         <div style={{ marginLeft: "700px" }}>
@@ -220,15 +308,6 @@ const WeekDetail = () => {
             일정 등록
           </Button>
         </div>
-
-        {toggle ? null : (
-          <Button
-            style={{ marginLeft: "700px", marginTop: "30px" }}
-            onClick={{}}
-          >
-            수정 완료
-          </Button>
-        )}
       </WeekView>
     </>
   );
