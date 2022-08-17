@@ -111,7 +111,7 @@ const WeekDetail = () => {
         </Day>
         </WeekBox>
         <div style={{marginLeft:'700px'}}>
-        <Button onClick={()=>{setweekSchedule(true)}}>일정 등록</Button>
+        <Button onClick={()=>{setweekSchedule(true)}}>일정 등록1</Button>
         </div>
         
         {toggle?(null):(<Button style={{marginLeft:'700px',marginTop:'30px'}} onClick={{}}>수정 완료</Button>)}
