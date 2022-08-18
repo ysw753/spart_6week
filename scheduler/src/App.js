@@ -7,9 +7,11 @@ import Join from "./components/login/Join";
 import { useContext, useEffect } from "react";
 import AuthContext from "./contextStore/auth-context";
 import WeekDetail from "./components/detail/WeekDetail";
+import Header from "./components/Header/Header";
 
 function App() {
   const authCtx = useContext(AuthContext);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -17,7 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
         <Route path="/detail" element={<Detail />} />
-
+        <Route path="/weekdetail" element={<WeekDetail />} />
         {authCtx.isLoggedIn && <Route path="/detail" element={<Detail />} />}
         {authCtx.isLoggedIn && (
           <Route path="/weekdetail" element={<WeekDetail />} />

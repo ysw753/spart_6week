@@ -344,7 +344,9 @@ const Detail = () => {
                     <p>{item.contents}</p>
                   </div>
                 </Edit>
-                <div onClick={() => onDeleteHandler(item.id)}>삭제하기</div>
+                <Delete onClick={() => onDeleteHandler(item.id)}>
+                  삭제하기
+                </Delete>
               </Card>
             );
           })}
@@ -364,7 +366,7 @@ export default Detail;
 const MainBox = styled.div`
   width: 1000px;
   min-width: 1000px;
-  background-color: orange;
+  background-color: #dcd7f5;
   margin: auto;
 `;
 const Card = styled.div`
@@ -373,31 +375,14 @@ const Card = styled.div`
   width: 100%;
   height: 100px;
   justify-content: left;
-  background-color: green;
+  background-color: #9a8fd1;
 `;
 const DaySection = styled.div`
   margin: 10px;
+  margin-top: 50px;
   padding: 10px;
-`;
-const EtcSection = styled.div`
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
-const WeekSection = styled.div`
-  margin: 10px;
-  width: 500px;
-  height: 300px;
-  background-color: yellow;
-`;
-const MonthSection = styled.div`
-  margin: 10px;
-  width: 500px;
-  height: 300px;
-  background-color: blue;
-`;
 const Button = styled.button`
   display: block;
   margin: auto;
@@ -408,11 +393,11 @@ const Button = styled.button`
   border-radius: 7px;
   background-color: white;
   font-size: 13px;
-  border: 3px solid gainsboro;
+  border: 3px solid #9e90e6;
   cursor: pointer;
   &:hover {
     text-decoration: underline;
-    background-color: gainsboro;
+    background-color: #9e90e6;
   }
 `;
 const Edit = styled.div`
@@ -422,6 +407,20 @@ const Edit = styled.div`
   width: 480px;
   height: 100px;
   &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    background-color: 9e90e6;
+  }
+`;
+const Delete = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 480px;
+  height: 100px;
+  margin: auto;
+  &:hover {
+    cursor: pointer;
     text-decoration: underline;
     background-color: gainsboro;
   }

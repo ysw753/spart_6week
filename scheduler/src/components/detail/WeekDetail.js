@@ -18,68 +18,17 @@ const WeekDetail = () => {
 
   const toggleFnc = () => {};
   const [dayToggle, setDayToggle] = useState("");
-  const onClickHandler = (day) => {
+  const onClickHandler = (day, id) => {
     setToggle((toggle) => !toggle);
-    if (day === "1") setDayToggle("1");
-    if (day === "2") setDayToggle("2");
-    if (day === "3") setDayToggle("3");
-    if (day === "4") setDayToggle("4");
-    if (day === "5") setDayToggle("5");
-    if (day === "6") setDayToggle("6");
-    if (day === "7") setDayToggle("7");
+    if (day === "1") setDayToggle(id);
+    if (day === "2") setDayToggle(id);
+    if (day === "3") setDayToggle(id);
+    if (day === "4") setDayToggle(id);
+    if (day === "5") setDayToggle(id);
+    if (day === "6") setDayToggle(id);
+    if (day === "7") setDayToggle(id);
     //if (toggle)
   };
-
-  // //데이터 불러오기
-  // const [fetchWeekData, setFetchWeedData] = useState([]);
-  // const [changeState, setChangeState] = useState(false);
-
-  // //get
-  // const getFetch = async () => {
-  //   axios
-  //     .get(
-  //       "url",
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       },
-  //       { withCredentials: true }
-  //     )
-  //     .then((res) => {
-  //       const getfetchdata = res.data.daylist;
-  //       console.log(res.data.daylist);
-  //       setFetchWeedData(getfetchdata);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  // //create
-  // const createFetch = axios.create({
-  //   BASE_URL: "",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     Authorization: `Bearer ${accessToken}`,
-  //   },
-  //   withCredentials: true,
-  // });
-
-  // const onCreateHandler = async () => {
-  //   const title = titleRef.current.value;
-  //   const contents = contentsRef.current.value;
-  //   const data = { title, contents };
-  //   try {
-  //     const res = await createFetch.post("", JSON.stringify(data));
-  //     //성공하면 우리 데이터에 저장을 시켜줘야함
-  //     //changeState변화줌
-  //     setChangeState((prev) => !prev);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const titleRef = useRef();
   const contentRef = useRef();
@@ -314,7 +263,7 @@ const WeekDetail = () => {
               i.daynum === 1 ? (
                 <div>
                   <div>
-                    {toggle && dayToggle === "1" ? (
+                    {toggle && dayToggle === i.id ? (
                       <div>
                         <input ref={titleRef} id="1" type="text"></input>
                         <input ref={contentRef} id="1" type="text"></input>
@@ -326,7 +275,7 @@ const WeekDetail = () => {
                       </div>
                     )}
                   </div>
-                  {toggle ? (
+                  {toggle && dayToggle === i.id ? (
                     <button onClick={() => onUpdateHandler(i.id)}>완료</button>
                   ) : (
                     <>
@@ -336,7 +285,7 @@ const WeekDetail = () => {
                       <VscEdit
                         size="15"
                         style={{ cursor: "pointer" }}
-                        onClick={() => onClickHandler("1")}
+                        onClick={() => onClickHandler("1", i.id)}
                       />
                     </>
                   )}
@@ -351,7 +300,7 @@ const WeekDetail = () => {
               i.daynum === 2 ? (
                 <div>
                   <div>
-                    {toggle && dayToggle === "2" ? (
+                    {toggle && dayToggle === i.id ? (
                       <div>
                         <input ref={titleRef} id="2" type="text"></input>
                         <input ref={contentRef} id="2" type="text"></input>
@@ -363,7 +312,7 @@ const WeekDetail = () => {
                       </div>
                     )}
                   </div>
-                  {toggle ? (
+                  {toggle && dayToggle === i.id ? (
                     <button onClick={() => onUpdateHandler(i.id)}>완료</button>
                   ) : (
                     <>
@@ -373,7 +322,7 @@ const WeekDetail = () => {
                       <VscEdit
                         size="15"
                         style={{ cursor: "pointer" }}
-                        onClick={() => onClickHandler("2")}
+                        onClick={() => onClickHandler("2", i.id)}
                       />
                     </>
                   )}
@@ -388,7 +337,7 @@ const WeekDetail = () => {
               i.daynum === 3 ? (
                 <div>
                   <div>
-                    {toggle && dayToggle === "3 " ? (
+                    {toggle && dayToggle === i.id ? (
                       <div>
                         <input ref={titleRef} id="3 " type="text"></input>
                         <input ref={contentRef} id="3 " type="text"></input>
@@ -400,7 +349,7 @@ const WeekDetail = () => {
                       </div>
                     )}
                   </div>
-                  {toggle ? (
+                  {toggle && dayToggle === i.id ? (
                     <button onClick={() => onUpdateHandler(i.id)}>완료</button>
                   ) : (
                     <>
@@ -410,7 +359,7 @@ const WeekDetail = () => {
                       <VscEdit
                         size="15"
                         style={{ cursor: "pointer" }}
-                        onClick={() => onClickHandler("3 ")}
+                        onClick={() => onClickHandler("3", i.id)}
                       />
                     </>
                   )}
@@ -425,7 +374,7 @@ const WeekDetail = () => {
               i.daynum === 4 ? (
                 <div>
                   <div>
-                    {toggle && dayToggle === "4" ? (
+                    {toggle && dayToggle === i.id ? (
                       <div>
                         <input ref={titleRef} id="4" type="text"></input>
                         <input ref={contentRef} id="4" type="text"></input>
@@ -437,7 +386,7 @@ const WeekDetail = () => {
                       </div>
                     )}
                   </div>
-                  {toggle ? (
+                  {toggle && dayToggle === i.id ? (
                     <button onClick={() => onUpdateHandler(i.id)}>완료</button>
                   ) : (
                     <>
@@ -447,7 +396,7 @@ const WeekDetail = () => {
                       <VscEdit
                         size="15"
                         style={{ cursor: "pointer" }}
-                        onClick={() => onClickHandler("4")}
+                        onClick={() => onClickHandler("4", i.id)}
                       />
                     </>
                   )}
@@ -462,7 +411,7 @@ const WeekDetail = () => {
               i.daynum === 5 ? (
                 <div>
                   <div>
-                    {toggle && dayToggle === "5" ? (
+                    {toggle && dayToggle === i.id ? (
                       <div>
                         <input ref={titleRef} id="5" type="text"></input>
                         <input ref={contentRef} id="5" type="text"></input>
@@ -474,7 +423,7 @@ const WeekDetail = () => {
                       </div>
                     )}
                   </div>
-                  {toggle ? (
+                  {toggle && dayToggle === i.id ? (
                     <button onClick={() => onUpdateHandler(i.id)}>완료</button>
                   ) : (
                     <>
@@ -484,7 +433,7 @@ const WeekDetail = () => {
                       <VscEdit
                         size="15"
                         style={{ cursor: "pointer" }}
-                        onClick={() => onClickHandler("5")}
+                        onClick={() => onClickHandler("5", i.id)}
                       />
                     </>
                   )}
@@ -499,7 +448,7 @@ const WeekDetail = () => {
               i.daynum === 6 ? (
                 <div>
                   <div>
-                    {toggle && dayToggle === "6" ? (
+                    {toggle && dayToggle === i.id ? (
                       <div>
                         <input ref={titleRef} id="6" type="text"></input>
                         <input ref={contentRef} id="6" type="text"></input>
@@ -511,7 +460,7 @@ const WeekDetail = () => {
                       </div>
                     )}
                   </div>
-                  {toggle ? (
+                  {toggle && dayToggle === i.id ? (
                     <button onClick={() => onUpdateHandler(i.id)}>완료</button>
                   ) : (
                     <>
@@ -521,7 +470,7 @@ const WeekDetail = () => {
                       <VscEdit
                         size="15"
                         style={{ cursor: "pointer" }}
-                        onClick={() => onClickHandler("6")}
+                        onClick={() => onClickHandler("6", i.id)}
                       />
                     </>
                   )}
@@ -587,12 +536,12 @@ const WeekView = styled.div`
   margin: auto;
   width: 1500px;
   height: 800px;
-  background-color: navajowhite;
+  background-color: #dcd7f5;
   border-radius: 50px;
 `;
 
 const Day = styled.div`
-  border: 2px solid saddlebrown;
+  border: 2px solid #6c5ac9;
   height: 450px;
   width: 200px;
   margin: auto;
@@ -613,13 +562,13 @@ const Button = styled.button`
   padding-left: 30px;
   padding-right: 30px;
   border-radius: 7px;
-  background-color: burlywood;
+  background-color: white;
   font-size: 13px;
-  border: 1px solid darkgoldenrod;
+  border: 1px solid #9e90e6;
   cursor: pointer;
   &:hover {
     text-decoration: underline;
-    background-color: peru;
+    background-color: #9c88ff;
   }
 `;
 const P = styled.div`

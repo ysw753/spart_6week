@@ -5,10 +5,11 @@ import styled from "styled-components";
 import AuthContext from "../../contextStore/auth-context";
 
 const Header = () => {
-  const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
-  const isLoggedIn = authCtx.isLoggedIn;
-  const user = authCtx.user;
+  const authCtx = useContext(AuthContext);
+  const isLoggedIn = !!localStorage.getItem("isLoggedIn");
+
+  const user = localStorage.getItem("username");
 
   const logoutHandler = () => {
     authCtx.logout();
@@ -17,10 +18,13 @@ const Header = () => {
   const loginHandler = () => {
     navigate("/login");
   };
+  const goHome = () => {
+    navigate("/main");
+  };
   return (
     <HeaderBox>
       <Box>
-        <BackBtn>홈</BackBtn>
+        <BackBtn onClick={goHome}>홈</BackBtn>
         {isLoggedIn ? (
           <>
             <p>{user}님 환영합니다</p>
@@ -48,7 +52,10 @@ const Box = styled.div`
     height: 50px;
   }
 `;
-const BackBtn = styled.div`
+const BackBtn = styled.button`
+  &:hover {
+    cursor: pointer;
+  }
   position: absolute;
   left: 0;
 `;
